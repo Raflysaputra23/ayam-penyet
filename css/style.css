@@ -1,0 +1,29 @@
+::root {
+	--poppins: 'Poppins', sans-serif;
+	--oswald: 'Oswald', sans-serif; 
+	--tillana: 'Tillana', sans-serif;
+}
+
+.poppins {
+	font-family: var(--poppins);
+}
+
+.tillana {
+	font-family: var(--tillana);
+}
+
+.oswald {
+	font-family: var(--oswald);
+}
+
+.bgColor {
+	background-color: #072271;
+}
+
+.fontColor {
+	color: #072271;
+}
+
+.widthWeb {
+	max-width: 1000px;
+}
