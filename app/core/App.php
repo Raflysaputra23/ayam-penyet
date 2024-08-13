@@ -6,7 +6,7 @@ class App {
 			$params = [];
 
 	public function __construct() {
-		$url = ($this->parseURL() == NULL) ? $this->parseURL() : ['Home'];
+		$url = ($this->parseURL() == NULL) ? ['Home'] : $this->parseURL();
 		$dir = 'app/controllers/';
 
 		if (file_exists($dir.ucfirst($url[0]).'.php')) {
@@ -18,7 +18,7 @@ class App {
 		$this->class = new $this->class;
 
 		if (isset($url[1])) {
-			if (method_exists($class, $url[1])) {
+			if (method_exists($this->class, $url[1])) {
 				$this->method = $url[1];
 				unset($url[1]);
 			}
