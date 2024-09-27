@@ -92,8 +92,8 @@ class Product extends Controller {
 		echo json_encode($this->model('Product_model')->minusCart($data));
 	}
 
-	public function setTranksaksi($idShopping) {
-		if ($this->model('Product_model')->setTranksaksi($idShopping) > 0) {
+	public function setTranksaksi($idShopping, $idTranksaksi) {
+		if ($this->model('Product_model')->setTranksaksi($idShopping, $idTranksaksi) > 0) {
 			Flasher::setFlash('Tranksaksi Berhasil', 'success');
 			Flasher::alert2();
 			header('location:'.Constant::DIRNAME.'product');
@@ -101,6 +101,30 @@ class Product extends Controller {
 		} else {
 			Flasher::setFlash('Tranksaksi Gagal', 'error');
 			Flasher::alert2();
+			header('location:'.Constant::DIRNAME.'product');
+			exit();
+		}
+	}
+
+	public function getProdukCart() {
+		$data = json_decode(file_get_contents('php://input'));
+		echo json_encode($this->model('Product_model')->getShoppingCart($data));
+	}
+
+	public function getDataUser() {
+		// $data = json_decode(file_get_contents('php://input'));
+		echo json_encode($this->model('Home_model')->getDataById($_SESSION['idUser']));
+	}
+
+	public function setStokProduk($idProduk, $stok) {
+		if ($this->model('Product_model')->setStokProduk($idProduk, $stok) > 0) {
+			Flasher::setFlash('Stok berhasil diubah', 'success');
+			Flasher::alert1();
+			header('location:'.Constant::DIRNAME.'product');
+			exit();
+		} else {
+			Flasher::setFlash('Stok gagal diubah', 'error');
+			Flasher::alert1();
 			header('location:'.Constant::DIRNAME.'product');
 			exit();
 		}

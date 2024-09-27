@@ -56,7 +56,7 @@
 							      <img src="img/minuman2.jpg" class="d-block w-100" alt="...">
 							    </div>
 							    <div class="carousel-item">
-							      <img src="img/minuman2.jpg" class="d-block w-100" alt="...">
+							      <img src="img/esjeruk.jpg" class="d-block w-100" alt="..." style="object-position: 0px -50px;">
 							    </div>
 							  </div>
 							  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval2" data-bs-slide="prev">

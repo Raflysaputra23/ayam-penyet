@@ -25,27 +25,38 @@
 							  <a href="" class="menuEditHapus position-absolute text-black end-0 mt-1" data-id-produk="<?=$produk['ProdukID']?>">
 							  	<i class="bx bx-menu fs-4" style="transform: scaleX(.2);"></i>
 							  </a>
-							  <div class="position-absolute rounded-2 bg-body-tertiary p-2 d-none" style="top: -3rem; right: -2rem;">
+							  <div class="position-absolute rounded-2 bg-body-tertiary p-2 d-flex gap-1 d-none" style="top: -3rem; right: -2rem;">
 							  	<a href="<?=Constant::DIRNAME?>product" data-id-produk="<?=$produk['ProductID']?>" class="btn btn-warning btn-sm edit" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-pencil"></i></a>
 							  	<a href="<?=Constant::DIRNAME?>product/hapusProduk/" class="btn btn-danger btn-sm hapus" data-id-produk="<?=$produk['ProductID']?>"><i class="bx bx-trash"></i></a>
+							  	<div class="dropdown">
+								  <button class="btn btn-success btn-sm shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								   <i class="bx bx-chevron-down"></i>
+								  </button>
+								  <ul class="dropdown-menu border-0 shadow mt-2 p-1">
+								    <li><a href="<?=Constant::DIRNAME?>product/setStokProduk/<?=$produk['ProductID']?>/1" class="dropdown-item hover-menu d-flex align-items-center gap-2 mb-1" data-kategori="makanan" href="">Ada</a></li>
+								    <li><a href="<?=Constant::DIRNAME?>product/setStokProduk/<?=$produk['ProductID']?>/0" class="dropdown-item hover-menu d-flex align-items-center gap-2 mb-1" data-kategori="minuman" href="">Habis</a></li>
+								  </ul>
+								</div>
 							  </div>
 							  <?php endif ?>
 
+							  <?php if ($produk['StokProduk'] == 'habis'): ?>
+							  	<h1 class="border bg-transparent border-danger position-absolute rounded-2 text-danger w-100 text-center mt-5 fw-bold z-3">Habis</h1>
+							  <?php endif ?>
 
-							  <img src="img/<?=$produk['GambarProduk']?>" class="mx-auto mt-2 shadow-sm rounded-2" alt="..." width="130" height="140" data-bs-toggle="modal" data-bs-target="#exampleModal" data-gambar-produk="<?=$produk['GambarProduk']?>" data-nama-produk="<?=$produk['NamaProduk']?>">
+							  <img src="<?=Constant::DIRNAME?>img/<?=$produk['GambarProduk']?>" class="mx-auto mt-2 shadow-sm rounded-2" alt="..." width="130" height="140" data-bs-toggle="modal" data-bs-target="#exampleModal" data-gambar-produk="<?=$produk['GambarProduk']?>" data-nama-produk="<?=$produk['NamaProduk']?>" style="<?= ($produk['StokProduk'] == 'habis') ? 'filter: brightness(50%)' : "";?>">
 							  <div class="card-body">
 							    <h5 class="card-title fw-semibold text-capitalize"><?=$produk['NamaProduk']?></h5>
 							    <p class="card-text"><small><?=$produk['DeskripsiProduk']?></small></p>
 							  </div>
 							  <ul class="list-group list-group-flush">
 							    <li class="list-group-item text-capitalize"><i class="bx <?=($produk['KategoriProduk'] == 'minuman') ? 'bx-drink' : 'bxs-food-menu'?>"></i> <?=$produk['KategoriProduk']?></li>
-							    <li class="list-group-item text-capitalize"><i class="bx bx-data"></i> <?=$produk['JumlahProduk']?> (stok)</li>
 							    <li class="list-group-item"><i class="bx bx-time-five"></i> <?=explode(' ',$produk['WaktuProduksi'])[0]?></li>
 							    <li class="list-group-item"><i class="bx bx-purchase-tag-alt"></i> Rp. <?=number_format($produk['HargaProduk'],0,'.','.')?></li>
 							  </ul>
 							  <div class="card-body text-center">
-							    <a href="#" class="btn btn-danger cart" data-nama-produk="<?=$produk['NamaProduk']?>" data-harga-produk="<?=$produk['HargaProduk']?>" data-gambar-produk="<?=$produk['GambarProduk']?>" data-id-produk="<?=$produk['ProductID']?>" data-id-user="<?=$_SESSION['idUser']?>"><i class="bx bx-cart-add fs-5"></i></a>
-							    <a href="#" class="btn btn-success">Pesan</a>
+							    <a href="#" class="btn btn-danger cart <?=($produk['StokProduk'] == 'habis') ? 'disabled' : ''?>" data-nama-produk="<?=$produk['NamaProduk']?>" data-harga-produk="<?=$produk['HargaProduk']?>" data-gambar-produk="<?=$produk['GambarProduk']?>" data-id-produk="<?=$produk['ProductID']?>" data-id-user="<?=$_SESSION['idUser']?>"><i class="bx bx-cart-add fs-5"></i></a>
+
 							  </div>
 							</div>
 						</div>
@@ -58,7 +69,7 @@
 
 				<!-- MODAL PRODUK -->
 				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="Modal produk" aria-hidden="true">
-				  <div class="modal-dialog modal-lg">
+				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        <h1 class="modal-title fs-5" id="judulModal">Tambah Produk</h1>
@@ -85,7 +96,7 @@
 				    <div class="card mb-3 shadow border-0" style="height: 4.5rem;">
 				    	<div class="row">
 				    		<div class="col-3">
-				    			<img src="img/<?=$cart['GambarProduk']?>" alt="" class="rounded-2" width="100%" height="72">
+				    			<img src="<?=Constant::DIRNAME?>img/<?=$cart['GambarProduk']?>" alt="" class="rounded-2" width="100%" height="72">
 				    		</div>
 				    		<div class="col-5 px-0">
 				    			<p class="fw-semibold m-0"><?=$cart['NamaProduk']?></p>
@@ -111,9 +122,7 @@
 						    	<p class="m-0">Rp. <?=number_format($data['totalHarga']['total'],0,'.','.')?></p>
 					    	</div>
 					    	<div class="col-4">
-					    		<form action="<?=Constant::DIRNAME?>product/setTranksaksi/<?=$data['cart'][0]['ShoppingID']?>" method="post">
-					    			<button type="submit" class="btn btn-primary" <?=($data['cart'] == false) ? 'disabled' : '';?>>Pesan</button>
-					    		</form>	
+					    		<button class="btn btn-primary btn-buy" <?=($data['cart'] == false) ? 'disabled' : '';?> onClick="btnBuy(event)" data-id-user="<?=$_SESSION['idUser']?>">Pesan</button>		
 					    	</div>
 				    	</div>
 				    </div>
@@ -128,6 +137,17 @@
 				const modalFooter = document.querySelector('.modal-footer');
 				const modalHeader = document.querySelector('.modal-header');
 				const canvasBody = document.querySelector('.offcanvas-body');
+				const quantityCart = document.querySelector("#btn-shopping-cart").nextElementSibling
+
+				window.addEventListener('load', () => {
+					localStorage.setItem('quantityCart', quantityCart.innerHTML);
+					if (parseInt(localStorage.getItem('quantityCart'))) {
+						quantityCart.classList.replace('d-none','d-block');
+					} else {
+						quantityCart.classList.replace('d-block','d-none');
+					}
+				});
+
 				modalBody.addEventListener('change', function(e) {
 					let element = e.target;
 					if (element.type == 'file' || element.classList.contains('bx-camera')) {
@@ -159,7 +179,7 @@
 						modalBody.innerHTML = `
 							 <div class="row justify-content-center">
 					        	<div class="col-12 text-center">
-					        		<img id="gambarProduk" width="100%" class="rounded-3 shadow" src="img/${gambarProduk}" alt="" style="height: 400px;">
+					        		<img id="gambarProduk" class="rounded-3 shadow ratio ratio-1x1" src="img/${gambarProduk}" alt="">
 					        	</div>
 					        </div>
 						`;
@@ -231,16 +251,10 @@
 					        				<label for="namaproduk" class="mb-1">Nama Produk</label>
 					        				<input type="text" name="namaproduk" id="namaproduk" value="${response.NamaProduk}" class="form-control" required>
 					        			</div>
-					        			<div class="d-flex align-items-center gap-3">
-						        			<div class="form-group mb-3">
-						        				<label for="jumlahproduk" class="mb-1">Jumlah Produk</label>
-						        				<input type="number" name="jumlahproduk" id="jumlahproduk" value="${response.JumlahProduk}" class="form-control" required>
-						        			</div>
 						        			<div class="form-group mb-3">
 						        				<label for="hargaproduk" class="mb-1">Harga Produk</label>
-						        				<input type="number" name="hargaproduk" id="hargaproduk" value="${response.HargaProduk}" class="form-control"required>
+						        				<input type="number" name="hargaproduk" min="0" id="hargaproduk" value="${response.HargaProduk}" class="form-control"required>
 						        			</div>
-					        			</div>
 					        			<div class="form-group mb-3 position-relative">
 					        				<label for="kategoriproduk" class="mb-1">Kategori Produk</label>
 					        				<select name="kategoriproduk" id="kategoriproduk" class="form-control">
@@ -287,7 +301,12 @@
 
 						let response = await requestAjax(`${dirname}product/getCart`, data);
 						let totalHarga = await requestAjax(`${dirname}product/getTotalHarga`, data);
-						plateCart(response, totalHarga);
+						plateCart(response, totalHarga, data.idUser);
+						if (response.length) {
+							quantityCart.classList.replace('d-none','d-block');
+							quantityCart.innerHTML = response.length;
+						}
+
 
 					}
 				});
@@ -328,16 +347,10 @@
 					        				<label for="namaproduk" class="mb-1">Nama Produk</label>
 					        				<input type="text" name="namaproduk" id="namaproduk" class="form-control" required>
 					        			</div>
-					        			<div class="d-flex align-items-center gap-3">
-						        			<div class="form-group mb-3">
-						        				<label for="jumlahproduk" class="mb-1">Jumlah Produk</label>
-						        				<input type="number" name="jumlahproduk" id="jumlahproduk" class="form-control" required>
-						        			</div>
 						        			<div class="form-group mb-3">
 						        				<label for="hargaproduk" class="mb-1">Harga Produk</label>
-						        				<input type="number" name="hargaproduk" id="hargaproduk" class="form-control"required>
+						        				<input type="number" min="0" name="hargaproduk" id="hargaproduk" class="form-control"required>
 						        			</div>
-					        			</div>
 					        			<div class="form-group mb-3 position-relative">
 					        				<label for="kategoriproduk" class="mb-1">Kategori Produk</label>
 					        				<select name="kategoriproduk" id="kategoriproduk" class="form-control">
@@ -382,7 +395,7 @@
 
 						let response  = await requestAjax(`${dirname}product/plusCart`, data);
 						let totalHarga = await requestAjax(`${dirname}product/getTotalHarga`, data);
-						plateCart(response, totalHarga);
+						plateCart(response, totalHarga, data.idUser);
 					}
 
 					if (element.tagName = 'A' && element.classList.contains('btn-danger') || element.classList.contains('bx-minus')) {
@@ -398,9 +411,17 @@
 							quantity: element.dataset.quantity
 						}
 
+
 						let response  = await requestAjax(`${dirname}product/minusCart`, data);
 						let totalHarga = await requestAjax(`${dirname}product/getTotalHarga`, data);
-						plateCart(response, totalHarga);
+						plateCart(response, totalHarga, data.idUser);
+						if (response.length) {
+							quantityCart.innerHTML = response.length;
+						} else {
+							quantityCart.innerHTML = response.length;
+							quantityCart.classList.replace('d-block','d-none');
+						}
+	
 					}
 				});
 
@@ -438,9 +459,18 @@
 									  `<a href="" class="menuEditHapus position-absolute text-black end-0 mt-1" data-id-produk="${produk.ProductID}">
 									  	<i class="bx bx-menu fs-4" style="transform: scaleX(.2);"></i>
 									  </a>
-									  <div class="position-absolute rounded-2 bg-body-tertiary p-2 d-none" style="top: -3rem; right: -2rem;">
+									  <div class="position-absolute rounded-2 bg-body-tertiary p-2 d-flex gap-1 d-none" style="top: -3rem; right: -2rem;">
 									  	<a href="${dirname}product/editProduk" data-id-produk="${produk.ProductID}" class="btn btn-warning btn-sm edit" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-pencil"></i></a>
 									  	<a href="${dirname}product/hapusProduk/" class="btn btn-danger btn-sm hapus" data-id-produk="${produk.ProductID}"><i class="bx bx-trash"></i></a>
+									  	<div class="dropdown">
+										  <button class="btn btn-success btn-sm shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+										   <i class="bx bx-chevron-down"></i>
+										  </button>
+										  <ul class="dropdown-menu border-0 shadow mt-2 p-1">
+										    <li><a href="${dirname}/product/setStokProduk/${produk.ProductID}/1" class="dropdown-item hover-menu d-flex align-items-center gap-2 mb-1" data-kategori="makanan" href="">Ada</a></li>
+										    <li><a href="${dirname}/product/setStokProduk/${produk.ProductID}/2" class="dropdown-item hover-menu d-flex align-items-center gap-2 mb-1" data-kategori="minuman" href="">Habis</a></li>
+										  </ul>
+										</div>
 									  </div>`
 									:''}
 									  
@@ -451,13 +481,11 @@
 									  </div>
 									  <ul class="list-group list-group-flush">
 									    <li class="list-group-item text-capitalize"><i class="bx ${(produk.KategoriProduk == 'minuman') ? 'bx-drink' : 'bxs-food-menu'}"></i> ${produk.KategoriProduk}</li>
-									    <li class="list-group-item text-capitalize"><i class="bx bx-data"></i> ${produk.JumlahProduk} (Stok)</li>
 									    <li class="list-group-item"><i class="bx bx-time-five"></i> ${produk.WaktuProduksi.split(' ')[0]}</li>
 									    <li class="list-group-item"><i class="bx bx-purchase-tag-alt"></i> Rp. ${numberFormat(produk.HargaProduk,0,'.','.')}</li>
 									  </ul>
 									  <div class="card-body text-center">
 									    <a href="#" class="btn btn-danger cart" data-nama-produk="${produk.NamaProduk}" data-harga-produk="${produk.HargaProduk}" data-gambar-produk="${produk.GambarProduk}" data-id-produk="${produk.ProductID}" data-id-user="${idUser}"><i class="bx bx-cart-add fs-5"></i></a>
-									    <a href="#" class="btn btn-success">Pesan</a>
 									  </div>
 									</div>
 								</div>
@@ -469,42 +497,59 @@
 					}
 				}	
 
-				function plateCart(data, totalHarga) {
-					let element = `
-						<div class="w-100 position-absolute bottom-0 start-0 end-0 px-3 py-2 rounded-2 shadow">
-					    	<div class="row align-items-center">
-						    	<div class="col-8">
-							    	<p class="m-0 fw-semibold">Total Harga</p>
-							    	<p class="m-0">Rp. ${numberFormat(totalHarga.total,0,'.','.')}</p>
-						    	</div>
-						    	<div class="col-4">
-						    		<form action="${dirname}product/setTranksaksi/${data[0]['ShoppingID']}">
-					    				<button type="submit" class="btn btn-primary" ${(data == false) ? 'disabled' : ''}>Pesan</button>
-					    			</form>	
-						    	</div>
-					    	</div>
-					    </div>
-					`;
-					data.forEach(el => {
-						element += `
-							<div class="card mb-3 shadow border-0" style="height: 4.5rem;">
-						    	<div class="row">
-						    		<div class="col-3">
-						    			<img src="img/${el.GambarProduk}" alt="" class="rounded-2" width="100%" height="72">
-						    		</div>
-						    		<div class="col-5 px-0">
-						    			<p class="fw-semibold m-0">${el.NamaProduk}</p>
-						    			<p class="text-secondary m-0">Rp. ${numberFormat(el.TotalHarga,0,'.','.')}</p>
-						    		</div>
-						    		<div class="col-4 d-flex align-items-center pe-4">
-						    			<a href="" class="btn btn-danger btn-sm" data-id-produk="${el.ProductID}" data-id-shopping="${el.ShoppingID}" data-id-user="${el.UserID}" data-harga-produk="${el.TotalHarga}" data-quantity="${el.quantity}"><i class="bx bx-minus"></i></a>
-						    			<p class="m-auto">${el.quantity}</p>
-						    			<a href="" class="btn btn-success btn-sm" data-id-produk="${el.ProductID}" data-id-shopping="${el.ShoppingID}" data-id-user="${el.UserID}" data-harga-produk="${el.TotalHarga}" data-quantity="${el.quantity}"><i class="bx bx-plus"></i></a>
-						    		</div>
+				function plateCart(data, totalHarga, idUser) {
+					let element = '';
+					if (data != false) {
+						element = `
+							<div class="w-100 position-absolute bottom-0 start-0 end-0 px-3 py-2 rounded-2 shadow">
+						    	<div class="row align-items-center">
+							    	<div class="col-8">
+								    	<p class="m-0 fw-semibold">Total Harga</p>
+								    	<p class="m-0">Rp. ${numberFormat(totalHarga.total,0,'.','.')}</p>
+							    	</div>
+							    	<div class="col-4">
+						    			<button type="button" class="btn btn-primary btn-buy" ${(data == false) ? 'disabled' : ''} data-id-user="${idUser}" onClick="btnBuy(event)">Pesan</button>
+							    	</div>
 						    	</div>
 						    </div>
 						`;
-					});
+						data.forEach(el => {
+							element += `
+								<div class="card mb-3 shadow border-0" style="height: 4.5rem;">
+							    	<div class="row">
+							    		<div class="col-3">
+							    			<img src="${dirname}img/${el.GambarProduk}" alt="" class="rounded-2" width="100%" height="72">
+							    		</div>
+							    		<div class="col-5 px-0">
+							    			<p class="fw-semibold m-0">${el.NamaProduk}</p>
+							    			<p class="text-secondary m-0">Rp. ${numberFormat(el.TotalHarga,0,'.','.')}</p>
+							    		</div>
+							    		<div class="col-4 d-flex align-items-center pe-4">
+							    			<a href="" class="btn btn-danger btn-sm" data-id-produk="${el.ProductID}" data-id-shopping="${el.ShoppingID}" data-id-user="${el.UserID}" data-harga-produk="${el.TotalHarga}" data-quantity="${el.quantity}"><i class="bx bx-minus"></i></a>
+							    			<p class="m-auto">${el.quantity}</p>
+							    			<a href="" class="btn btn-success btn-sm" data-id-produk="${el.ProductID}" data-id-shopping="${el.ShoppingID}" data-id-user="${el.UserID}" data-harga-produk="${el.TotalHarga}" data-quantity="${el.quantity}"><i class="bx bx-plus"></i></a>
+							    		</div>
+							    	</div>
+							    </div>
+							`;
+						});
+					} else {
+						element += `<div class="w-100 position-absolute bottom-0 start-0 end-0 px-3 py-2 rounded-2 shadow">
+								    	<div class="row align-items-center">
+									    	<div class="col-8">
+										    	<p class="m-0 fw-semibold">Total Harga</p>
+										    	<p class="m-0">Rp. 0</p>
+									    	</div>
+									    	<div class="col-4">
+									    		<form action="">
+								    				<button type="submit" class="btn btn-primary" disabled>Pesan</button>
+								    			</form>	
+									    	</div>
+								    	</div>
+								    </div>`
+						element += '<h4 class="text-center mt-5">Cart is Empty <i class="bx bx-search fs-4"></i></h4>'
+					}
+					
 					canvasBody.innerHTML = element;
 				}
 
@@ -545,5 +590,80 @@
 				        (decimals ? dec_point + Math.abs(number - intPart).toFixed(decimals).slice(2) : '');
 
 				    return formattedNumber;
+				}
+
+				async function btnBuy(e) {
+					let data = {
+						idUser: e.target.dataset.idUser
+					}
+					
+
+					data["totalHarga"] = await requestAjax(`${dirname}product/getTotalHarga`, data);
+					data["dataProduk"] = await requestAjax(`${dirname}product/getProdukCart`, data);
+					data["dataUser"] = await requestAjax(`${dirname}product/getDataUser`, data);
+					data.dataProduk.forEach((el, key) => {
+						data.dataProduk[key].id = parseInt(el.ProductID);
+						data.dataProduk[key].name = el.NamaProduk;
+						data.dataProduk[key].price = parseInt(el.HargaProduk);
+						data.dataProduk[key].quantity = parseInt(data.dataProduk[key].quantity)
+					});
+						
+					let token = await fetch(`${dirname}gateaway.php`,{ method: 'POST', header: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+					token = await token.text();
+					
+					window.snap.pay(token, {
+						onSuccess: (result) => {
+							localStorage.setItem('quantityCart',0);
+							window.location.href = `${dirname}product/setTranksaksi/${data.dataProduk[0]["ShoppingID"]}/${result.order_id}`;
+						},
+						onPending: (result) => {
+							swetAlertMixin('error',`Menunggu pembayaran`);
+							result.finish_redirect_url = "";
+							console.log(result);
+						},
+						onClose: () => {
+							swetAlertMixin('error',`Pembayaran gagal`);
+							result.finish_redirect_url = "";	
+							console.log(result);
+						}
+					});
+
+					
+					
+				}
+
+				// function formatMessage(dataProduk,totalHarga, user) {
+				// 	return `
+				// 	Data Customer
+				// 	Nama : ${user.Username}
+				// 	Email : ${user.Email}
+				// 	NoTelp : ${user.NoTelp}
+
+				// 	Data Pesanan
+				// 	${dataProduk.map(el => `${el.NamaProduk}: Rp.${numberFormat(el.HargaProduk,0,'.','.')} \n`)}
+
+				// 	Total Harga 
+				// 	Rp.${numberFormat(totalHarga.total,0,'.','.')}
+				// 	`
+				// }
+
+				function swetAlertMixin(type, title) {
+
+					const Toast = Swal.mixin({
+					  toast: true,
+					  position: 'top-end',
+					  showConfirmButton: false,
+					  timer: 3000,
+					  timerProgressBar: true,
+					  didOpen: (toast) => {
+					    toast.onmouseenter = Swal.stopTimer;
+					    toast.onmouseleave = Swal.resumeTimer;
+					  }
+					});
+					Toast.fire({
+					  icon: type,
+					  title: title
+					});
+			
 				}
 			</script>

@@ -40,4 +40,28 @@ class Inbox_model {
 		$this->db->execute();
 		return $this->db->single();
 	}
+
+	public function setInformasi($data) {
+		$idUser = $_SESSION['idUser'];
+		$pesan = $data["pesan"];
+
+		$this->db->query('INSERT INTO informasi(SenderID, pesan) VALUES (:idUser, :pesan)');
+		$this->db->bind('idUser', $idUser);
+		$this->db->bind('pesan', $pesan);
+		$this->db->execute();
+		return $this->db->rowCount();
+	}
+
+	public function tampilInformasi() {
+		$this->db->query('SELECT * FROM informasi join users WHERE informasi.SenderID = users.UserID');
+		$this->db->execute();
+		return $this->db->resultSet();
+	}
+
+	public function hapusInformasi($idUser) {
+		$this->db->query('DELETE FROM informasi WHERE SenderID = :idUser');
+		$this->db->bind('idUser',$idUser);
+		$this->db->execute();
+		return $this->db->rowCount();
+	}
 }

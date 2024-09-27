@@ -2,9 +2,7 @@ const menuAside = document.querySelectorAll('#menu-aside a');
 const dirname = 'http://localhost/AyamPenyet/';
 const jadwalOperasi = document.querySelector('.jadwal-operasi');
 const jamDigital = document.querySelector('.jam-digital');
-const role = document.querySelector('#role');
-
-
+const role = document.querySelector('#role').dataset.user;
 
 const btnProfile = document.getElementById('btn-profile');
 btnProfile.addEventListener('click', function(e) {
@@ -54,7 +52,6 @@ window.addEventListener('click', function(e) {
 
 window.addEventListener('load', function() {
 	resize();
-	// setInterval(jam, 1000);
 });
 
 window.addEventListener('resize', function() {

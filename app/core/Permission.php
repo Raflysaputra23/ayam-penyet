@@ -20,4 +20,11 @@ class Permission {
 			exit();
 		}
 	}
+
+	public static function izinUbahPassword() {
+		if (empty($_SESSION['izinUbahPassword'])) {
+			header('location:'.Constant::DIRNAME);
+			exit();
+		}
+	}
 }

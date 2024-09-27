@@ -19,6 +19,11 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@300&family=Tillana&display=swap" rel="stylesheet">
 
+	<!-- GATEAWAY MIDTRANS -->
+	<script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-VrbmyPm5-CG2dSEb"></script>
+
 	<!-- SWEETALERT -->
 	<script src="
 	https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.all.min.js
@@ -42,7 +47,7 @@
 	  <div class="container tillana px-4 position-relative">
 	  	<div class="d-flex align-items-center gap-1">
 		  	 <a class="navbar-brand d-flex align-items-center gap-2 text-shadow text-success fs-4" href="#">
-		     	 <img src="img/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+		     	 <img src="<?=Constant::DIRNAME?>img/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
 		      Ayam <small class="text-warning fs-4">penyet</small>
 		     </a>
 			<!-- <div class="jadwal-operasi bg-danger p-1 px-2 rounded-2 text-white text-center mt-5"></div> -->
@@ -57,6 +62,7 @@
 	     		<a id="btn-shopping-cart" href="" class="text-black text-decoration-none d-flex align-items-center me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
 		      		<i class="bx bx-cart fs-4 text-danger"></i>
 		      	</a>
+		      	<p class="position-absolute rounded-circle d-flex justify-content-center align-items-center bg-danger text-white d-block" style="width: 1.2rem; height: 1.2rem; font-size: 12px; top: -6px; right: 2px;"><?=(isset($data["cart"])) ? count($data['cart']) : ''?></p>
 	     	</div>
 
 	     	<?php endif ?>
@@ -82,8 +88,8 @@
 								</div>
 							</div>
 							<hr class="m-0 my-2">
-							<a href="" class="text-black rounded-1 p-2 d-flex align-items-center gap-2 hover-menu"><i class="bx bx-user fs-5"></i> Akun</a>
-							<a href="" class="text-black rounded-1 p-2 d-flex align-items-center gap-2 hover-menu"><i class="bx bx-cog fs-5"></i> Settings</a>
+							<a href="<?=Constant::DIRNAME?>akun" class="text-black rounded-1 p-2 d-flex align-items-center gap-2 hover-menu"><i class="bx bx-user fs-5"></i> Akun</a>
+							<a href="<?=Constant::DIRNAME?>settings" class="text-black rounded-1 p-2 d-flex align-items-center gap-2 hover-menu"><i class="bx bx-cog fs-5"></i> Settings</a>
 							<hr class="m-0 my-2">
 							<a href="<?=Constant::DIRNAME?>home/logout" class="text-black rounded-1 p-2 d-flex align-items-center gap-2 hover-logout"><i class="bx bx-log-out fs-5"></i> Logout</a>
 						</div>
@@ -125,7 +131,7 @@
 					<a id="inbox" href="<?=Constant::DIRNAME?>inbox" class="p-2 px-3 text-black d-flex align-items-center gap-2 hover-menu transition-ease-03s <?=($data['judul'] == 'Inbox') ? 'active-menu' : '' ?>"><i class="bx bx-message-dots fs-5"></i> <p class="m-0">Inbox</p></a>
 					<a id="history" href="<?=Constant::DIRNAME?>history" class="p-2 px-3 text-black d-flex align-items-center gap-2 hover-menu transition-ease-03s <?=($data['judul'] == 'History') ? 'active-menu' : '' ?>"><i class="bx bx-history fs-5"></i> <p class="m-0">History</p></a>
 					<a id="tambah-produk" href="" class="p-2 px-3 text-black d-flex align-items-center gap-2 hover-menu transition-ease-03s <?=($data['judul'] != 'Product' || $_SESSION['role'] != 'admin') ? 'd-none' : 'active'?>" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-plus fs-5"></i> <p class="m-0">Tambah</p></a>
-					<a id="role" href="#" class="text-white bg-success text-center py-2 rounded-2 text-capitalize my-2 <?=($_SESSION['role'] != 'admin') ? 'd-none' : '';?>"><?=$_SESSION['role']?></a>
+					<a id="role" href="#" title="admin" data-user="<?=$_SESSION['role']?>" class="text-white bg-success text-center py-2 rounded-2 text-capitalize my-2 <?=($_SESSION['role'] != 'admin') ? 'd-none' : '';?>"><i class="bx bx-user fs-5"></i><p class="position-absolute"></p></a>
 				</div>
 				<!-- END ASIDE MENU -->
 

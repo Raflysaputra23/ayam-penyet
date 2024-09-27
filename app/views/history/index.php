@@ -23,7 +23,7 @@
 								<h5 class="m-0 fw-bold tillana text-success">Ayam penyet</h5>
 								<h5 class="m-0 fw-bold tillana text-success">Sambal ijo</h5>
 							</div>
-							<p class="mt-3 m-0 text-secondary font-menu lh-1"><small>No. Tranksaksi : <?=$history['TranksaksiID']?></small></p>
+							<p class="mt-3 m-0 text-secondary font-menu lh-1"><small>Order ID : <?=$history['TranksaksiID']?></small></p>
 							<p class="m-0 text-secondary font-menu"><small>Waktu Tranksaksi : <?=$history['WaktuHistory']?></small></p>
 							<hr class="m-0 mb-3">
 							<div class="row">
@@ -134,7 +134,7 @@
 										<h5 class="m-0 fw-bold tillana text-success">Ayam penyet</h5>
 										<h5 class="m-0 fw-bold tillana text-success">Sambal ijo</h5>
 									</div>
-									<p class="mt-3 m-0 text-secondary font-menu lh-1"><small>No. Tranksaksi : ${el.TranksaksiID}</small></p>
+									<p class="mt-3 m-0 text-secondary font-menu lh-1"><small>Order ID : ${el.TranksaksiID}</small></p>
 									<p class="m-0 text-secondary font-menu"><small>Waktu Tranksaksi : ${el.WaktuHistory}</small></p>
 									<hr class="m-0 mb-3">
 									<div class="row">

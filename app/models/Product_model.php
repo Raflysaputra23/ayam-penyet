@@ -11,15 +11,14 @@ class Product_model {
 		$namaproduk = $data['namaproduk'];
 		$hargaproduk = $data['hargaproduk'];
 		$kategoriproduk = $data['kategoriproduk'];
-		$jumlahproduk = $data['jumlahproduk'];
 		$deskripsiproduk = $data['deskripsiproduk'];
-		$gambarproduk = $this->uploadGambar($_FILES['gambarproduk']);
+		$gambarproduk = ($_FILES['gambarproduk']['error'] <= 0) ? $this->uploadGambar($_FILES['gambarproduk']) : 'logo.png';
+		$Id = 1;
 
-		$this->db->query('INSERT INTO produk(NamaProduk, HargaProduk, KategoriProduk, JumlahProduk, GambarProduk, DeskripsiProduk) VALUES (:namaproduk, :hargaproduk, :kategoriproduk, :jumlahproduk, :gambarproduk, :deskripsiproduk)');
+		$this->db->query('INSERT INTO produk(NamaProduk, HargaProduk, KategoriProduk, GambarProduk, DeskripsiProduk) VALUES (:namaproduk, :hargaproduk, :kategoriproduk, :gambarproduk, :deskripsiproduk)');
 		$this->db->bind('namaproduk', $namaproduk);
 		$this->db->bind('hargaproduk', $hargaproduk);
 		$this->db->bind('kategoriproduk', $kategoriproduk);
-		$this->db->bind('jumlahproduk', $jumlahproduk);
 		$this->db->bind('gambarproduk', $gambarproduk);
 		$this->db->bind('deskripsiproduk', $deskripsiproduk);
 		$this->db->execute();
@@ -83,10 +82,18 @@ class Product_model {
 	public function hapusProduk($data) {
 		$idProduk = $data;
 
-		$this->db->query('DELETE FROM produk WHERE ProductID = :idProduk');
-		$this->db->bind('idProduk', $idProduk);
-		$this->db->execute();
-		return $this->db->rowCount();
+		try {
+			$this->db->query('DELETE FROM produk WHERE ProductID = :idProduk');
+			$this->db->bind('idProduk', $idProduk);
+			$this->db->execute();
+			return $this->db->rowCount();	
+		} catch (Exception $e) {
+			Flasher::setFlash('Barang tidak bisa dihapus user sedang memesan barang tersebut','error');
+			Flasher::alert1();
+			header('location:'.Constant::DIRNAME.'product');
+			exit();
+		}
+		
 	}
 
 	public function editProduk($data, $idProduk) {
@@ -222,10 +229,18 @@ class Product_model {
 		return $this->getShoppingCart($data);
 	}
 
-	public function setTranksaksi($idShopping) {
-		$idTranksaksi = strtoupper(uniqid());
+	public function setTranksaksi($idShopping, $idTranksaksi) {
 		$dataProduk = $this->getShoppingCart($_SESSION['idUser']);
 		$totalHarga = $this->getTotalHarga($_SESSION['idUser']);
+
+		foreach ($dataProduk as $data) {
+			$this->db->query('SELECT * FROM produk WHERE ProductID = :idProduk');
+			$this->db->bind('idProduk', $data['ProductID']);
+			$this->db->execute();
+			 if ($this->db->resultSet()) {
+			 	// code...
+			 }
+		}
 
 		try {
 			$this->db->beginTransaction();
@@ -257,5 +272,17 @@ class Product_model {
 		}
 		
 	}	
+
+	public function setStokProduk($idProduk, $stok) {
+		$idStok = ($stok == 1) ? 'ada' : 'habis';
+
+		$this->db->query('UPDATE produk SET StokProduk = :stokProduk WHERE ProductID = :idProduk');
+		$this->db->bind('stokProduk', $idStok);
+		$this->db->bind('idProduk', $idProduk);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
 	
 }
