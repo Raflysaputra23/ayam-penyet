@@ -58,9 +58,9 @@ class Inbox_model {
 		return $this->db->resultSet();
 	}
 
-	public function hapusInformasi($idUser) {
-		$this->db->query('DELETE FROM informasi WHERE SenderID = :idUser');
-		$this->db->bind('idUser',$idUser);
+	public function hapusInformasi($idInformasi) {
+		$this->db->query('DELETE FROM informasi WHERE InformasiID = :idInformasi');
+		$this->db->bind('idInformasi',$idInformasi);
 		$this->db->execute();
 		return $this->db->rowCount();
 	}

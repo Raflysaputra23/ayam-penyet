@@ -2,7 +2,6 @@ const menuAside = document.querySelectorAll('#menu-aside a');
 const dirname = 'http://localhost/AyamPenyet/';
 const jadwalOperasi = document.querySelector('.jadwal-operasi');
 const jamDigital = document.querySelector('.jam-digital');
-const role = document.querySelector('#role').dataset.user;
 
 const btnProfile = document.getElementById('btn-profile');
 btnProfile.addEventListener('click', function(e) {

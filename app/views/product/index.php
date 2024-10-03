@@ -138,6 +138,8 @@
 				const modalHeader = document.querySelector('.modal-header');
 				const canvasBody = document.querySelector('.offcanvas-body');
 				const quantityCart = document.querySelector("#btn-shopping-cart").nextElementSibling
+				const role = document.querySelector('#role').dataset.user;
+
 
 				window.addEventListener('load', () => {
 					localStorage.setItem('quantityCart', quantityCart.innerHTML);
@@ -619,12 +621,11 @@
 						onPending: (result) => {
 							swetAlertMixin('error',`Menunggu pembayaran`);
 							result.finish_redirect_url = "";
-							console.log(result);
 						},
-						onClose: () => {
+						onClose: (result) => {
 							swetAlertMixin('error',`Pembayaran gagal`);
-							result.finish_redirect_url = "";	
-							console.log(result);
+							// 
+							console.log(result)
 						}
 					});
 

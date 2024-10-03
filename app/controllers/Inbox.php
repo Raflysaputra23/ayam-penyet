@@ -39,8 +39,8 @@ class Inbox extends Controller {
 		}
 	}
 
-	public function hapusInformasi($idUser) {
-		if ($this->model('Inbox_model')->hapusInformasi($idUser) > 0) {
+	public function hapusInformasi($idInformasi) {
+		if ($this->model('Inbox_model')->hapusInformasi($idInformasi) > 0) {
 			Flasher::setFlash('Informasi berhasil dihapus','success');
 			Flasher::alert1();
 			header('location:'.Constant::DIRNAME.'inbox');
