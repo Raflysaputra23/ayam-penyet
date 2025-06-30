@@ -1,0 +1,12 @@
+img/*.png
+img/*.jpg
+img/*.jpeg
+
+
+!img/ayampenyet1.jpg
+!img/ayampenyet2.jpg
+!img/ayampenyet3.jpeg
+!img/esjeruk.jpg
+!img/logo.png
+!img/minuman1.jpg
+!img/minuman2.jpg
